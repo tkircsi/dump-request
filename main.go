@@ -8,9 +8,12 @@ import (
 )
 
 func main() {
+	fs := http.FileServer(http.Dir("./static"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
 	http.HandleFunc("/", homePage)
 	http.HandleFunc("/dump", dumpRequest)
+
 	log.Println("Server is listening on port 5000")
 	log.Fatal(http.ListenAndServe(":5000", nil))
 }
